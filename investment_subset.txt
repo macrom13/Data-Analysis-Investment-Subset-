@@ -1,0 +1,30 @@
+--2. Seed Funding
+
+SELECT market, status, COUNT(status), ROUND(AVG(seed), 2) AS seed_average,
+MIN(seed) AS min_seed, MAX(seed) AS max_seed
+FROM investment_subset1
+WHERE status = 'operating'
+GROUP BY investment_subset1.market, investment_subset.status
+----------------------------------------------------------------
+
+--3. Equity Crowdfunding
+
+SELECT market, status, country_code, founded_year, equity_crowdingfunding
+FROM investment_subset1
+WHERE equity_crowdfunding > 0;
+-------------------------------------------------------------------
+
+--4. Total Funding USD
+
+SELECT market,country_code,status,founded_year,funding_total_usd
+FROM investment_subset1
+WHERE funding_total_usd IS NOT NULL AND funding_total_usd > 500000000
+ORDER BY funding_total_usd DESC;
+------------------------------------------------------------------
+
+--5. Total Funding USD no outlier
+
+SELECT market,country_code,status,founded_year,funding_total_usd
+FROM investment_subset1
+WHERE funding_total_usd IS NOT NULL AND funding_total_usd < 500000000
+ORDER BY funding_total_usd DESC;
